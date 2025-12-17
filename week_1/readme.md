@@ -30,8 +30,8 @@ portfolio/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/portfolio.git
-cd portfolio
+https://github.com/UndefinedSid/dev_arena_intern.git
+cd dev_arena_intern
 ```
 
 ### 2. Open in browser
