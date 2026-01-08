@@ -108,8 +108,8 @@ week_4/
 
 1. **Clone the repository** (if applicable)
    ```bash
-   git clone [repository-url]
-   cd week_4
+   git clone https://github.com/UndefinedSid/dev_arena_intern.git
+   cd Myntra clone/week_4/
    ```
 
 2. **Open the project**
@@ -158,7 +158,7 @@ week_4/
 3. Add items to cart directly from wishlist
 4. Remove items from wishlist
 
-### Profile Menu
+### Profile Menu(Fix Later)
 1. Click the profile icon in the header
 2. Access profile options:
    - My Profile
