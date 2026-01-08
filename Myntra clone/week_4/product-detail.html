@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Myntra</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="https://i.pinimg.com/736x/72/5d/42/725d42fb10fe3fbf5239b86897c55780.jpg" alt="Myntra" class="logo-img">
+                    </a>
+                </div>
+                <ul class="nav-categories" id="nav-categories">
+                    <li><a href="index.html#men">MEN</a></li>
+                    <li><a href="index.html#women">WOMEN</a></li>
+                    <li><a href="index.html#kids">KIDS</a></li>
+                    <li><a href="index.html#home">HOME & LIVING</a></li>
+                    <li><a href="index.html#beauty">BEAUTY</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search for products, brands and more">
+                </div>
+                <div class="nav-icons">
+                    <div class="nav-icon" id="profile-icon">
+                        <i class="far fa-user"></i>
+                        <span>Profile</span>
+                    </div>
+                    <div class="nav-icon wishlist-icon" id="wishlist-icon">
+                        <i class="far fa-heart"></i>
+                        <span>Wishlist</span>
+                        <span class="wishlist-count" id="wishlist-count">0</span>
+                    </div>
+                    <div class="nav-icon cart-icon" id="cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Bag</span>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </nav>
+        <div class="profile-menu" id="profile-menu">
+            <div class="profile-menu-header">
+                <div class="profile-avatar">G</div>
+                <div>
+                    <div class="profile-name">Guest</div>
+                    <div class="profile-email">guest@myntra.com</div>
+                </div>
+            </div>
+            <ul class="profile-menu-list">
+                <li><i class="far fa-user"></i> My Profile</li>
+                <li><i class="fas fa-box"></i> Orders</li>
+                <li><i class="far fa-heart"></i> Wishlist</li>
+                <li><i class="fas fa-sign-out-alt"></i> Sign In / Sign Up</li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="product-detail-container">
+            <div class="product-detail-grid">
+                <!-- Product Images -->
+                <div class="product-images-section">
+                    <div class="main-product-image" id="main-product-image">
+                        <img src="" alt="Product" id="product-main-img">
+                    </div>
+                    <div class="product-thumbnails" id="product-thumbnails">
+                        <!-- Thumbnails will be dynamically inserted -->
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-info-section">
+                    <div class="product-brand-name" id="product-brand"></div>
+                    <h1 class="product-title" id="product-title"></h1>
+                    <div class="product-rating">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="rating-text">(4.5) | 1,234 Ratings</span>
+                    </div>
+                    <div class="product-price-section">
+                        <span class="price-current" id="product-price">₹0</span>
+                        <span class="price-original" id="product-original-price"></span>
+                        <span class="price-discount" id="product-discount"></span>
+                    </div>
+                    <div class="product-tax-info">
+                        <span>inclusive of all taxes</span>
+                    </div>
+
+                    <!-- Size Selection -->
+                    <div class="product-option-section" id="size-section" style="display: none;">
+                        <div class="option-label">
+                            <span>SELECT SIZE</span>
+                            <a href="#" class="size-guide">Size Guide</a>
+                        </div>
+                        <div class="size-options" id="size-options">
+                            <!-- Sizes will be dynamically inserted -->
+                        </div>
+                    </div>
+
+                    <!-- Color Selection -->
+                    <div class="product-option-section" id="color-section" style="display: none;">
+                        <div class="option-label">
+                            <span>SELECT COLOR</span>
+                        </div>
+                        <div class="color-options" id="color-options">
+                            <!-- Colors will be dynamically inserted -->
+                        </div>
+                    </div>
+
+                    <!-- Selected Options Display -->
+                    <div class="selected-options" id="selected-options" style="display: none;">
+                        <div class="selected-info">
+                            <span id="selected-size-text"></span>
+                            <span id="selected-color-text"></span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="product-actions">
+                        <button class="add-to-bag-btn" id="add-to-bag-btn">
+                            <i class="fas fa-shopping-bag"></i> ADD TO BAG
+                        </button>
+                        <button class="wishlist-detail-btn" id="wishlist-detail-btn">
+                            <i class="far fa-heart"></i> WISHLIST
+                        </button>
+                    </div>
+
+                    <!-- Product Details -->
+                    <div class="product-details-section">
+                        <h3>Product Details</h3>
+                        <div class="product-description" id="product-description"></div>
+                        <div class="product-specs" id="product-specs">
+                            <div class="spec-item">
+                                <span class="spec-label">Brand</span>
+                                <span class="spec-value" id="spec-brand"></span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Category</span>
+                                <span class="spec-value" id="spec-category"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Info -->
+                    <div class="delivery-info">
+                        <div class="delivery-item">
+                            <i class="fas fa-truck"></i>
+                            <div>
+                                <strong>Free Delivery</strong>
+                                <p>Order above ₹999</p>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <i class="fas fa-undo"></i>
+                            <div>
+                                <strong>Easy Returns</strong>
+                                <p>30 Days Return Policy</p>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div>
+                                <strong>Secure Payment</strong>
+                                <p>100% Secure Transactions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Shopping Bag</h2>
+            <button class="close-cart" id="close-cart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="empty-cart">
+                <i class="fas fa-shopping-bag"></i>
+                <p>Your shopping bag is empty</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total: ₹<span id="cart-total">0</span></span>
+            </div>
+            <button class="checkout-btn">Checkout</button>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <!-- Wishlist Sidebar -->
+    <div class="wishlist-sidebar" id="wishlist-sidebar">
+        <div class="wishlist-header">
+            <h2>My Wishlist</h2>
+            <button class="close-wishlist" id="close-wishlist">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="wishlist-items" id="wishlist-items">
+            <div class="empty-wishlist">
+                <i class="far fa-heart"></i>
+                <p>Your wishlist is empty</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="wishlist-overlay" id="wishlist-overlay"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>ONLINE SHOPPING</h4>
+                <ul>
+                    <li><a href="index.html#men">Men</a></li>
+                    <li><a href="index.html#women">Women</a></li>
+                    <li><a href="index.html#kids">Kids</a></li>
+                    <li><a href="index.html#home">Home & Living</a></li>
+                    <li><a href="index.html#beauty">Beauty</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>CUSTOMER POLICIES</h4>
+                <ul>
+                    <li><a href="contact.html">Contact Us</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">T&C</a></li>
+                    <li><a href="#">Track Orders</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Cancellation</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>EXPERIENCE MYNTRA APP ON MOBILE</h4>
+                <div class="app-download">
+                    <div class="app-badge">
+                        <i class="fab fa-google-play"></i>
+                        <div>
+                            <span class="app-text">GET IT ON</span>
+                            <span class="app-name">Google Play</span>
+                        </div>
+                    </div>
+                    <div class="app-badge">
+                        <i class="fab fa-apple"></i>
+                        <div>
+                            <span class="app-text">Download on the</span>
+                            <span class="app-name">App Store</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>KEEP IN TOUCH</h4>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <div class="footer-copyright">
+                    <p><strong>© 2024 www.myntra.com</strong> All rights reserved.</p>
+                </div>
+                <div class="footer-payment">
+                    <span>100% SECURE PAYMENTS</span>
+                    <div class="payment-icons">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                        <i class="fab fa-cc-amex"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="product-detail.js"></script>
+</body>
+</html>
