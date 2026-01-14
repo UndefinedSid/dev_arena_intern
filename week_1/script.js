@@ -80,31 +80,75 @@ const lightboxImg = $("#lightboxImg");
 const lightboxClose = $("#lightboxClose");
 
 // ===== Day 2: DOM Manipulation =====
-function updateStatus(message) {
+function updateStatus(message, ms = 1400) {
+  if (!statusBar) return;
   setText(statusBar, message);
-  statusBar.style.background = "#eef";
-  statusBar.style.padding = "0.5rem";
-}
+  statusBar.style.display = 'block';
+  clearTimeout(updateStatus._t);
+  updateStatus._t = setTimeout(() => { statusBar.style.display = 'none'; }, ms);
+} 
 
 // Dynamic footer year (non-breaking enhancement)
 (function setFooterYear() {
-  const footer = document.querySelector("footer p");
-  if (footer) {
-    const yr = new Date().getFullYear();
-    footer.innerHTML = `&copy; ${yr} Siddharth. All rights reserved.`;
+  const yearEl = document.querySelector('#year');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
   }
 })();
 
 // ===== Day 3: Event Handling =====
 // Example: highlight nav links on hover (simple interaction)
 document.querySelectorAll("nav a").forEach((link) => {
-  link.addEventListener("mouseenter", () => {
-    link.style.textDecoration = "underline";
-  });
-  link.addEventListener("mouseleave", () => {
-    link.style.textDecoration = "none";
+  link.addEventListener("mouseenter", () => link.style.textDecoration = "underline");
+  link.addEventListener("mouseleave", () => link.style.textDecoration = "none");
+});
+
+// Smooth scroll for internal links & auto-close mobile nav
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+  link.addEventListener('click', (e) => {
+    const id = link.getAttribute('href');
+    if (!id || id === '#') return;
+    e.preventDefault();
+    const target = document.querySelector(id);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (document.querySelector('#mainNav')?.classList.contains('open')) {
+      document.querySelector('#mainNav').classList.remove('open');
+      document.querySelector('#navToggle')?.setAttribute('aria-expanded', 'false');
+    }
   });
 });
+
+// Header shrink on scroll
+(function headerScroll() {
+  const header = document.getElementById('siteHeader');
+  if (!header) return;
+  const onScroll = () => {
+    if (window.scrollY > 64) header.classList.add('shrink'); else header.classList.remove('shrink');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+// Nav toggle for mobile
+const navToggle = document.querySelector('#navToggle');
+const mainNav = document.querySelector('#mainNav');
+if (navToggle && mainNav) {
+  navToggle.addEventListener('click', () => {
+    const open = mainNav.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+}
+
+// Reveal-on-scroll (intersection observer)
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 // ===== Day 4: Form Validation (real-time + submit) =====
 function validateName(value) {
@@ -163,11 +207,14 @@ if (contactForm) {
 // ===== Day 5: Interactive Features =====
 // Feature 1: Dark Mode Toggle (with localStorage persistence)
 function applyTheme(theme) {
-  const isDark = theme === "dark";
-  bodyEl.classList.toggle("dark", isDark);
-  setText(themeToggleBtn, isDark ? "☀️ Light Mode" : "🌙 Dark Mode");
-  updateStatus(isDark ? "Dark mode enabled." : "Light mode enabled.");
-}
+  const isDark = theme === 'dark';
+  bodyEl.classList.toggle('dark', isDark);
+  if (themeToggleBtn) {
+    themeToggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+    themeToggleBtn.textContent = isDark ? '☀️' : '🌙';
+  }
+  updateStatus(isDark ? 'Dark mode enabled.' : 'Light mode enabled.');
+} 
 function initTheme() {
   const saved = localStorage.getItem(LS_KEYS.theme) || "light";
   applyTheme(saved);
@@ -216,17 +263,200 @@ function closeLightbox() {
   document.body.style.overflow = "";
   updateStatus("Lightbox closed.");
 }
+// Project image interactions: open modal (if inside project-card) or lightbox otherwise
 if (gallery) {
   gallery.addEventListener("click", (e) => {
     const img = e.target.closest("img.thumb");
     if (!img) return;
+
+    const cardLink = img.closest('a.project-card');
+    if (cardLink) {
+      // Open project modal instead of navigating
+      e.preventDefault();
+      openProjectModalFromCard(cardLink);
+      return;
+    }
+
+    // Otherwise open generic lightbox (for standalone images)
     openLightbox(img.src, img.alt);
   });
 }
+
+// Project modal logic
+const projectModal = document.getElementById('projectModal');
+const projectModalClose = document.getElementById('projectModalClose');
+const projectModalImg = document.getElementById('projectModalImg');
+const projectModalTitle = document.getElementById('projectModalTitle');
+const projectModalDesc = document.getElementById('projectModalDesc');
+const projectModalDemo = document.getElementById('projectModalDemo');
+const projectModalCode = document.getElementById('projectModalCode');
+const projectModalDetails = document.getElementById('projectModalDetails');
+let _lastFocused = null;
+
+function openProjectModalFromCard(card) {
+  // Extract details from the card and its sibling link buttons
+  const title = card.querySelector('.project h3')?.textContent || 'Project';
+  const desc = card.querySelector('.project p')?.textContent || '';
+  const imgEl = card.querySelector('img.thumb');
+  const imgSrc = imgEl?.getAttribute('src') || imgEl?.src || '';
+
+  // Try to find demo/code links within nearby .project-links-inline (sibling after card)
+  const sibling = card.nextElementSibling;
+  let demoHref = '#';
+  let codeHref = '#';
+  if (sibling && sibling.classList.contains('project-links-inline')) {
+    demoHref = sibling.querySelector('a')?.href || '#';
+    codeHref = sibling.querySelectorAll('a')[1]?.href || '#';
+  }
+
+  // Fill modal
+  projectModalTitle.textContent = title;
+  projectModalDesc.textContent = desc;
+  projectModalImg.src = imgSrc;
+  projectModalDemo.href = demoHref;
+  projectModalCode.href = codeHref;
+  projectModalDetails.href = card.getAttribute('href') || '#';
+
+  // Show
+  projectModal.hidden = false;
+  projectModal.setAttribute('aria-hidden', 'false');
+
+  // Focus management
+  _lastFocused = document.activeElement;
+  projectModalClose.focus();
+
+  // Trap focus
+  document.addEventListener('focus', trapFocus, true);
+  document.addEventListener('keydown', onModalKeyDown);
+}
+
+function closeProjectModal() {
+  projectModal.hidden = true;
+  projectModal.setAttribute('aria-hidden', 'true');
+  document.removeEventListener('focus', trapFocus, true);
+  document.removeEventListener('keydown', onModalKeyDown);
+  if (_lastFocused) _lastFocused.focus();
+}
+
+function trapFocus(e) {
+  if (!projectModal || projectModal.hidden) return;
+  if (!projectModal.contains(e.target)) {
+    e.stopPropagation();
+    projectModalClose.focus();
+  }
+}
+
+function onModalKeyDown(e) {
+  if (e.key === 'Escape') closeProjectModal();
+  if (e.key === 'Tab') {
+    // Simple tab trap: rotate focus inside modal
+    const focusable = projectModal.querySelectorAll('a[href], button:not([disabled])');
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+}
+
+// Close handlers
+projectModalClose?.addEventListener('click', closeProjectModal);
+projectModal?.addEventListener('click', (e) => { if (e.target.classList.contains('project-modal__backdrop')) closeProjectModal(); });
+
 if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
 if (lightbox) {
   lightbox.addEventListener("click", (e) => {
     if (e.target === lightbox) closeLightbox(); // click backdrop to close
+  });
+}
+
+// Certificate modal logic (viewer for PDFs)
+const certModal = document.getElementById('certModal');
+const certModalClose = document.getElementById('certModalClose');
+const certFrame = document.getElementById('certFrame');
+const certModalTitle = document.getElementById('certModalTitle');
+const certDownload = document.getElementById('certDownload');
+const certVerify = document.getElementById('certVerify');
+
+function openCertModal(src, title = '', verify = '') {
+  if (!certModal) return;
+  certFrame.src = src;
+  certModalTitle.textContent = title || 'Certificate';
+  certDownload.href = src;
+  if (verify) { certVerify.href = verify; certVerify.hidden = false; } else { certVerify.hidden = true; certVerify.href = '#'; }
+
+  certModal.hidden = false;
+  certModal.setAttribute('aria-hidden', 'false');
+
+  // Focus management
+  _lastFocused = document.activeElement;
+  certModalClose.focus();
+  document.addEventListener('focus', trapCertFocus, true);
+  document.addEventListener('keydown', onCertKeyDown);
+}
+
+function closeCertModal() {
+  if (!certModal) return;
+  certModal.hidden = true;
+  certModal.setAttribute('aria-hidden', 'true');
+  certFrame.src = '';
+  document.removeEventListener('focus', trapCertFocus, true);
+  document.removeEventListener('keydown', onCertKeyDown);
+  if (_lastFocused) _lastFocused.focus();
+}
+
+function trapCertFocus(e) {
+  if (!certModal || certModal.hidden) return;
+  if (!certModal.contains(e.target)) {
+    e.stopPropagation();
+    certModalClose.focus();
+  }
+}
+
+function onCertKeyDown(e) {
+  if (e.key === 'Escape') closeCertModal();
+  if (e.key === 'Tab') {
+    const focusable = certModal.querySelectorAll('a[href], button:not([disabled])');
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+}
+
+certModalClose?.addEventListener('click', closeCertModal);
+certModal?.addEventListener('click', (e) => { if (e.target.classList.contains('project-modal__backdrop')) closeCertModal(); });
+
+// Wire up gallery buttons
+document.querySelectorAll('.cert-view').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const src = btn.dataset.src;
+    const title = btn.dataset.title || '';
+    const verify = btn.dataset.verify || '';
+    openCertModal(src, title, verify);
+  });
+});
+
+// Optional: clicking the thumbnail also opens the viewer
+const certGrid = document.querySelector('.certs-grid');
+if (certGrid) {
+  certGrid.addEventListener('click', (e) => {
+    const thumb = e.target.closest('img.cert-thumb');
+    if (!thumb) return;
+    const card = thumb.closest('.cert-card');
+    const btn = card.querySelector('.cert-view');
+    if (btn) btn.click();
   });
 }
 
@@ -289,9 +519,8 @@ if (contactForm) {
 
 // ===== Day 7: Testing & Debugging Hooks =====
 function simulateStatus(msg, ms = 1200) {
-  updateStatus(msg);
-  setTimeout(() => setText(statusBar, ""), ms);
+  updateStatus(msg, ms);
 }
 
 // Indicate ready
-simulateStatus("Interactive features ready.");
+simulateStatus('Interactive features ready.', 1200);

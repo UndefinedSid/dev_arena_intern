@@ -3,131 +3,284 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sid's Portfolio</title>
+  <meta name="description" content="Siddharth - Developer. Portfolio showcasing projects, skills, and contact information.">
+  <title>Siddharth — Portfolio</title>
   <link rel="stylesheet" href="style.css">
-
-  
-  <!-- <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      line-height: 1.6;
-    }
-    header {
-      background: #333;
-      color: #fff;
-      padding: 1rem 0;
-      text-align: center;
-    }
-    nav ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-    }
-    main {
-      padding: 2rem;
-    }
-    section {
-      margin-bottom: 3rem;
-    }
-    h2 {
-      border-bottom: 2px solid #333;
-      padding-bottom: 0.5rem;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      max-width: 400px;
-    }
-    form input, form textarea {
-      margin-bottom: 1rem;
-      padding: 0.5rem;
-      font-size: 1rem;
-    }
-    form button {
-      background: #333;
-      color: #fff;
-      padding: 0.7rem;
-      border: none;
-      cursor: pointer;
-    }
-    footer {
-      background: #333;
-      color: #fff;
-      text-align: center;
-      padding: 1rem;
-    }
-   img {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  object-fit: cover; /* Ensures image fills the circle without distortion */
-  display: block; /* Removes extra space below image */
-  margin: 1rem auto; /* Centers the image */
-}
-  </style>
-   -->
 </head>
 <body>
+  <!-- Site status bar (used for tiny messages) -->
+  <div id="statusBar" aria-hidden="true"></div>
+
   <!-- Header -->
-  <header>
-    <h1>Siddharth's Portfolio</h1>
-    <nav> 
-      <ul>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
+  <header class="site-header" id="siteHeader">
+    <div class="container header__inner">
+      <div class="brand">
+        <h1><a class="brand__link" href="index.html">Siddharth</a></h1>
+        <p class="muted">Developer • Problem solver</p>
+      </div>
+
+      <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="mainNav" aria-label="Toggle navigation">☰</button>
+
+      <nav id="mainNav" class="main-nav" role="navigation" aria-label="Primary navigation">
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <div class="social-links" aria-hidden="false">
+          <a class="social" href="https://github.com/UndefinedSid" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.4 7.86 10.93.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.06-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.75-1.56-2.56-.29-5.26-1.28-5.26-5.72 0-1.26.45-2.3 1.2-3.11-.12-.3-.52-1.52.11-3.17 0 0 .97-.31 3.18 1.19.92-.26 1.9-.39 2.88-.39.98 0 1.96.13 2.88.39 2.22-1.5 3.19-1.19 3.19-1.19.64 1.65.24 2.87.12 3.17.75.81 1.2 1.85 1.2 3.11 0 4.45-2.71 5.43-5.29 5.71.42.37.79 1.1.79 2.22 0 1.6-.01 2.88-.01 3.27 0 .31.21.68.8.56C20.71 21.4 24 17.08 24 12 24 5.73 18.27.5 12 .5z"/></svg>
+          </a>
+          <a class="social" href="https://www.linkedin.com/in/sid113/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.75 20h-2.5v-10h2.5v10zm-1.25-11.26c-.8 0-1.45-.66-1.45-1.47 0-.81.65-1.47 1.45-1.47s1.45.66 1.45 1.47c0 .81-.65 1.47-1.45 1.47zm13 11.26h-2.5v-5.5c0-1.31-.02-3-1.83-3-1.83 0-2.11 1.43-2.11 2.9v5.6h-2.5v-10h2.4v1.35h.03c.33-.62 1.14-1.27 2.34-1.27 2.5 0 2.96 1.65 2.96 3.8v6.12z"/></svg>
+          </a>
+          <a class="social" href="https://leetcode.com/u/sid_113/" target="_blank" rel="noopener" aria-label="LeetCode">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.59 6.41L8.17 7.83 15.34 15l1.42-1.41zM3 18h6v-2H5V8H3z"/></svg>
+          </a>
+        </div>
+
+        <a class="btn btn--resume" href="Siddharth_CV.pdf" download aria-label="Download resume">Resume</a>
+        <button id="themeToggle" class="btn btn--ghost" aria-pressed="false" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
   </header>
 
-  <!-- Main Content -->
-  <main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content reveal">
+        <h2>Hi, I'm Siddharth</h2>
+        <p class="lead">I build reliable backends, solve algorithmic challenges, and bring ideas to production.</p>
+        <div class="hero__ctas">
+          <a class="btn" href="#projects">See Projects</a>
+          <a class="btn btn--outline" href="#contact">Contact Me</a>
+          <a class="btn btn--resume" href="Siddharth_CV.pdf" download>Download Resume</a>
+        </div>
+      </div>
+      <div class="hero__art reveal">
+        <picture>
+          <img src="images/Sid_profile-360.jpg" alt="Siddharth portrait">
+        </picture>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
     <!-- About Section -->
-    <section id="about">
+    <section id="about" class="card reveal">
       <h2>About Me</h2>
-      <img src="images/Sid_profile.jpg" alt="Profile picture of Sid">
-      <p>Hello! I'm Siddharth, a resilient and curious learner with strong skills in C++, and Java. I thrive on solving algorithmic challenges and enjoy bridging theory with practical applications like backend engineering and DevOps troubleshooting.</p>
+      <p>Hello! I'm Siddharth, a resilient and curious learner with strong skills in C++ and Java. I enjoy algorithmic challenges and building backend systems. I also have hands-on experience with Docker and AWS.</p>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills">
+    <section id="skills" class="card reveal">
       <h2>Skills</h2>
-      <ul>
-        <li>Programming: C++, Java</li>
-        <li>Algorithms: BFS, Greedy, Optimization</li>
-        <li>Backend: JDBC, SQL</li>
-        <li>DevOps: Docker, AWS</li>
+      <div class="skills-grid" id="skillsList">
+        <div class="skill">
+          <strong>Programming Languages:</strong>
+          <div class="skill__tags">C++, Java, JavaScript, Python</div>
+        </div>
+        <div class="skill">
+          <strong>Web Technologies:</strong>
+          <div class="skill__tags">HTML5, CSS3, React.js, Web Development</div>
+        </div>
+        <div class="skill">
+          <strong>Backend & Databases:</strong>
+          <div class="skill__tags">API Integration, MySQL</div>
+        </div>
+        <div class="skill">
+          <strong>Core Concepts:</strong>
+          <div class="skill__tags">Data Structures & Algorithms, OOPS, Computer Networks, Operating Systems</div>
+        </div>
+        <div class="skill">
+          <strong>Soft Skills:</strong>
+          <div class="skill__tags">Git, Machine Learning, Problem Solving, Communication</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="card reveal">
+      <h2>Featured Projects</h2>
+      <div class="projects-grid" id="gallery">
+        <a class="project-card" href="project-1.html" aria-label="Open Project One details">
+          <article class="project">
+            <picture>
+              <source media="(max-width:880px)" srcset="images/project-1-600.jpg">
+              <img class="thumb" src="images/project-1-1200.jpg" alt="Project 1 screenshot">
+            </picture>
+            <h3>Project One</h3>
+            <p>Short description highlighting the tech used and problem solved.</p>
+          </article>
+        </a>
+        <div class="project-links-inline">
+          <a class="btn btn--small" href="https://example.com/project-1-demo" target="_blank" rel="noopener">Demo</a>
+          <a class="btn btn--small btn--outline" href="https://github.com/USERNAME/project-1" target="_blank" rel="noopener">Code</a>
+        </div>
+        <a class="project-card" href="project-2.html" aria-label="Open Project Two details">
+          <article class="project">
+            <picture>
+              <source media="(max-width:880px)" srcset="images/project-2-600.jpg">
+              <img class="thumb" src="images/project-2-1200.jpg" alt="Project 2 screenshot">
+            </picture>
+            <h3>Project Two</h3>
+            <p>Short description — performance, scale, or algorithmic challenge.</p>
+          </article>
+        </a>
+        <div class="project-links-inline">
+          <a class="btn btn--small" href="https://example.com/project-2-demo" target="_blank" rel="noopener">Demo</a>
+          <a class="btn btn--small btn--outline" href="https://github.com/USERNAME/project-2" target="_blank" rel="noopener">Code</a>
+        </div>
+        <a class="project-card" href="project-3.html" aria-label="Open Project Three details">
+          <article class="project">
+            <picture>
+              <source media="(max-width:880px)" srcset="images/project-3-600.jpg">
+              <img class="thumb" src="images/project-3-1200.jpg" alt="Project 3 screenshot">
+            </picture>
+            <h3>Project Three</h3>
+            <p>Short description — backend focus or tooling showcase.</p>
+          </article>
+        </a>
+        <div class="project-links-inline">
+          <a class="btn btn--small" href="https://example.com/project-3-demo" target="_blank" rel="noopener">Demo</a>
+          <a class="btn btn--small btn--outline" href="https://github.com/USERNAME/project-3" target="_blank" rel="noopener">Code</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section id="certifications" class="card reveal">
+      <h2>Certifications</h2>
+      <p class="muted">Selected professional certificates and courses — click View to preview, Download to save, or Verify when a public verification link is available.</p>
+      <ul class="certs-list">
+        <li><strong>Deloitte Technology Job Simulation (Forage):</strong> Completed practical tasks in coding and development, gaining exposure to real-world problem-solving in a professional technology consulting environment.</li>
+        <li><strong>TATA GenAI Powered Data Analytics Job Simulation (Forage):</strong> Conducted exploratory data analysis, performed risk profiling on real-world datasets, and built AI-driven models for predictive analysis.</li>
+        <li><strong>GFG 160 Days of Problem Solving:</strong> Completed a 22-week structured program, strengthening DSA and coding skills through intensive, daily practice.</li>
+      </ul>
+
+      <div class="certs-gallery" aria-labelledby="certGalleryTitle">
+        <h3 id="certGalleryTitle">Certificate Gallery</h3>
+        <div class="certs-grid">
+          <figure class="cert-card">
+            <img class="cert-thumb" src="images/certs/gfg-360.jpg" srcset="images/certs/gfg-800.jpg 800w, images/certs/gfg-360.jpg 360w" sizes="(min-width:600px) 33vw, 100vw" alt="GFG 160 Days certificate thumbnail">
+            <figcaption>
+              <strong>GFG 160 Days of Problem Solving</strong>
+              <div class="cert-actions">
+                <button class="btn btn--small cert-view" data-src="certs/GFG 160 certificate.pdf" data-title="GFG 160 Days of Problem Solving" data-verify="https://media.geeksforgeeks.org/courses/certificates/0a31d26138578c5bc1b18021ae3fd11b.pdf">View</button>
+                <a class="btn btn--small btn--outline" href="certs/GFG 160 certificate.pdf" download>Download</a>
+                <a class="btn btn--small btn--link" href="https://media.geeksforgeeks.org/courses/certificates/0a31d26138578c5bc1b18021ae3fd11b.pdf" target="_blank" rel="noopener">Verify</a>
+              </div>
+            </figcaption>
+          </figure>
+
+          <figure class="cert-card">
+            <img class="cert-thumb" src="images/certs/skillbuild-360.jpg" srcset="images/certs/skillbuild-800.jpg 800w, images/certs/skillbuild-360.jpg 360w" sizes="(min-width:600px) 33vw, 100vw" alt="IBM SkillBuild certificate thumbnail">
+            <figcaption>
+              <strong>IBM Web Dev SkillBuild</strong>
+              <div class="cert-actions">
+                <button class="btn btn--small cert-view" data-src="certs/web dev skillbuild main certifiacte.pdf" data-title="IBM Web Dev SkillBuild">View</button>
+                <a class="btn btn--small btn--outline" href="certs/web dev skillbuild main certifiacte.pdf" download>Download</a>
+              </div>
+            </figcaption>
+          </figure>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Achievements -->
+    <section id="achievements" class="card reveal">
+      <h2>Achievements</h2>
+      <ul class="achievements-list">
+        <li><strong>Naukri Campus | CodeQuezt #21 Coding Contest:</strong> Secured All-India Rank 64 out of 26,445 participants, demonstrating strong competitive programming and problem-solving abilities.</li>
+        <li><strong>LeetCode:</strong> Solved 400+ problems and earned many badges for consistent daily problem-solving.</li>
       </ul>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
+    <section id="contact" class="card reveal">
       <h2>Contact Me</h2>
-      <form action="https://formspree.io/f/yourFormID" method="POST">
+      <form id="contactForm" action="https://formspree.io/f/yourFormID" method="POST" novalidate>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+        <input class="form__input" type="text" id="name" name="name" required>
+        <div id="nameError" class="form__error" aria-live="polite"></div>
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="_replyto" required>
+        <input class="form__input" type="email" id="email" name="_replyto" required>
+        <div id="emailError" class="form__error" aria-live="polite"></div>
 
         <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
+        <textarea class="form__input" id="message" name="message" rows="5" required></textarea>
+        <div id="messageError" class="form__error" aria-live="polite"></div>
 
-        <button type="submit">Send Message</button>
+        <div class="form__actions">
+          <button class="form__button" type="submit">Send Message</button>
+          <div id="formFeedback" class="form__feedback" aria-live="polite"></div>
+        </div>
       </form>
     </section>
   </main>
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2025 Siddharth. All rights reserved.</p>
+    <p>&copy; <span id="year">2025</span> Siddharth. All rights reserved.</p>
   </footer>
+
+  <!-- Lightbox (hidden until used) -->
+  <div id="lightbox" class="lightbox" hidden>
+    <button id="lightboxClose" class="lightbox__close" aria-label="Close">✕</button>
+    <img id="lightboxImg" src="" alt="Expanded project image">
+  </div>
+
+  <!-- Project modal (opens when clicking project thumbnail) -->
+  <div id="projectModal" class="project-modal" role="dialog" aria-modal="true" aria-hidden="true" hidden>
+    <div class="project-modal__backdrop"></div>
+    <div class="project-modal__panel" role="document" aria-labelledby="projectModalTitle">
+      <button class="project-modal__close" id="projectModalClose" aria-label="Close project details">✕</button>
+      <div class="project-modal__body">
+        <div class="project-modal__media">
+          <img id="projectModalImg" src="" alt="Project preview">
+        </div>
+        <div class="project-modal__content">
+          <h3 id="projectModalTitle">Project Title</h3>
+          <p id="projectModalDesc">Short description</p>
+          <div class="project-modal__links">
+            <a id="projectModalDemo" class="btn" href="#" target="_blank" rel="noopener">Live Demo</a>
+            <a id="projectModalCode" class="btn btn--outline" href="#" target="_blank" rel="noopener">View Code</a>
+            <a id="projectModalDetails" class="btn btn--ghost" href="#">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificate modal (viewer) -->
+  <div id="certModal" class="project-modal cert-modal" role="dialog" aria-modal="true" aria-hidden="true" hidden>
+    <div class="project-modal__backdrop cert-modal__backdrop"></div>
+    <div class="project-modal__panel cert-modal__panel" role="document" aria-labelledby="certModalTitle">
+      <button class="project-modal__close cert-modal__close" id="certModalClose" aria-label="Close certificate viewer">✕</button>
+      <div class="project-modal__body">
+        <div class="cert-modal__content">
+          <h3 id="certModalTitle">Certificate</h3>
+          <div class="cert-embed-wrap">
+            <iframe id="certFrame" src="" title="Certificate viewer" frameborder="0"></iframe>
+          </div>
+          <div class="cert-modal__meta">
+            <a id="certDownload" class="btn" href="#" download>Download</a>
+            <a id="certVerify" class="btn btn--outline" href="#" target="_blank" rel="noopener" hidden>Verify</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
 </body>
 </html>
+
+
