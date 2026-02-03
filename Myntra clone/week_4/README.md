@@ -4,7 +4,6 @@ A fully functional e-commerce website clone inspired by Myntra, India's leading 
 
 ## 🚀 Live Demo
 
-(https://dev-arena-intern.vercel.app/)
 
 ## ✨ Features
 
